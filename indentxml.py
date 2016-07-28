@@ -2,7 +2,7 @@ import sublime
 import sublime_plugin
 import re
 import json
-from pxdom import parseString
+import pxdom
 from xml.parsers.expat import ExpatError, errors
 from os.path import basename, splitext
 
@@ -101,7 +101,7 @@ class IndentXmlCommand(BaseIndentCommand):
         # replace tags to convince minidom process cdata as text
         s = s.replace(b'<![CDATA[', b'%CDATAESTART%').replace(b']]>', b'%CDATAEEND%')
         try:
-            s = parseString(s).toprettyxml()
+            s = pxdom.parseString(s, {"format-pretty-print": True})
         except ExpatError as err:
             message = "Invalid XML: %s line:%d:col:%d" % (errors.messages[err.code], err.lineno, err.offset)
             sublime.status_message(message)
