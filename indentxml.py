@@ -2,13 +2,13 @@ import sublime
 import sublime_plugin
 import re
 import json
-from xml.dom.minidom import parseString
+from pxdom import parseString
 from xml.parsers.expat import ExpatError, errors
 from os.path import basename, splitext
 
 
 class BaseIndentCommand(sublime_plugin.TextCommand):
-  
+
     def __init__(self, view):
         self.view = view
         self.language = self.get_language()
